@@ -74,10 +74,10 @@ class ResolverBasicTests: XCTestCase {
     func testRegistrationAndResolutionArguments() {
         resolver.register { XYZSessionService() }
         resolver.register { (r, a) -> XYZService in
-            XCTAssert( (a as? Bool) ?? false )
+            XCTAssert( (a?.first as? Bool) ?? false )
             return XYZService( r.optional() )
         }
-        let service: XYZService? = resolver.optional(args: true)
+        let service: XYZService? = resolver.optional(args: [true])
         XCTAssertNotNil(service)
         XCTAssertNotNil(service?.session)
     }
@@ -95,10 +95,10 @@ class ResolverBasicTests: XCTestCase {
     func testRegistrationAndResolutionPropertiesArgs() {
         resolver.register { XYZSessionService() }
             .resolveProperties { (r, s, a) in
-                XCTAssert( (a as? Bool) ?? false )
+                XCTAssert( (a?.first as? Bool) ?? false )
                 s.name = "updated"
             }
-        let session: XYZSessionService? = resolver.optional(args: true)
+        let session: XYZSessionService? = resolver.optional(args: [true])
         XCTAssertNotNil(session)
         XCTAssert(session?.name == "updated")
     }
@@ -110,7 +110,7 @@ class ResolverBasicTests: XCTestCase {
     }
 
     func testRegistrationAndResolutionResolveArgs() {
-        let service: XYZService = Resolver.resolve(args: true)
+        let service: XYZService = Resolver.resolve(args: [true])
         XCTAssertNotNil(service.session)
     }
 

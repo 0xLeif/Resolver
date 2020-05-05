@@ -76,7 +76,7 @@ class ResolverClassTests: XCTestCase {
     }
 
     func testRegistrationAndResolutionArguments() {
-        let service: XYZService? = Resolver.optional(args: true)
+        let service: XYZService? = Resolver.optional(args: [true])
         XCTAssertNotNil(service)
         XCTAssertNotNil(service?.session)
     }
@@ -87,7 +87,7 @@ class ResolverClassTests: XCTestCase {
     }
 
     func testRegistrationAndResolutionResolveArgs() {
-        let service: XYZService = Resolver.resolve(args: true)
+        let service: XYZService = Resolver.resolve(args: [true])
         XCTAssertNotNil(service.session)
     }
 
